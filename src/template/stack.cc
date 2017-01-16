@@ -3,18 +3,20 @@
 #include <stdexcept>
 #include <string>
 #include <typeinfo>
+#include <deque>
+#include <list>
 
-template <typename T>
+template <typename T, typename CONT = std::vector<T>>
 class Stack {
 public:
   Stack() {}
   ~Stack() {}
 
-  Stack(const Stack<T>& other) {
+  Stack(const Stack<T, CONT>& other) {
     elements_ = other.elements_;
   }
 
-  Stack<T>& operator=(const Stack<T>& other) {
+  Stack<T, CONT>& operator=(const Stack<T, CONT>& other) {
     elements_ = other.elements_;
     return *this;
   }
@@ -46,11 +48,11 @@ public:
     return elements_.empty();
   }
 private:
-  std::vector<T> elements_;
+  CONT elements_;
 };
 
-template <typename T>
-void testStack(Stack<T> s) {
+template <typename T, typename CONT>
+void testStack(Stack<T, CONT> s) {
   try {
     s.top();
   } catch(const std::out_of_range& e) {
@@ -78,7 +80,7 @@ void testStack(Stack<T> s) {
 }
 
 int main() {
-  Stack<int> s1{{1,2,3,4,5}};
+  Stack<int, std::list<int>> s1{{1,2,3,4,5}};
 
   testStack(s1);
 
