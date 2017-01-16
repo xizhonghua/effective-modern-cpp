@@ -1,0 +1,4 @@
+# ingore everything but cc/h
+src/template/*
+!src/template/*.cc
+!src/template/*.h
